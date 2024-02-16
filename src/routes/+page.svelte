@@ -28,6 +28,8 @@
         },
     ];
 
+    $: remainingTodos = todos.filter((todo) => !todo.isComplete).length
+
     function addTodo(e) {
         e.preventDefault()
         todoId = todos.length + 1
@@ -65,8 +67,8 @@
             {#each todos as todo, index(todo.id)}
                 <li class="todo-item-container">
                     <div class="todo-item">
-                        <input type="checkbox" />
-                        <span class="todo-item-label line-through">{todo.title}</span>
+                        <input type="checkbox" bind:checked={todo.isComplete} />
+                        <span class="todo-item-label" class:line-through={todo.isComplete}>{todo.title}</span>
                         <!-- <input
                           type="text"
                           class="todo-item-input"
@@ -98,7 +100,7 @@
             <div>
                 <div class="button">Check All</div>
             </div>
-            <span>3 items remaining</span>
+            <span>{remainingTodos} items remaining</span>
         </div>
 
         <div class="other-buttons-container">
